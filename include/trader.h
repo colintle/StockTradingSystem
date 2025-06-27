@@ -9,6 +9,7 @@ namespace StockTradingSystem
     {
         public:
             Trader(const std::string&);
+            std::string getName() const;
         private:
             std::string name_;
     };
