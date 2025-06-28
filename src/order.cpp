@@ -34,4 +34,14 @@ namespace StockTradingSystem
     {
         return ordertype_;
     }
+
+    bool Order::reduceQuantity(int quantity)
+    {
+        if (quantity > 0 && quantity <= quantity_)
+        {
+            quantity_ -= quantity;
+            return true;
+        }
+        return false;
+    }
 }
