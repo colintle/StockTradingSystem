@@ -17,6 +17,7 @@ namespace StockTradingSystem
             int getQuantity() const;
             std::time_t getTimestamp() const;
             OrderType getOrdertype() const;
+            bool reduceQuantity(int quantity);
         private:
             Trader trader_;
             double price_;
