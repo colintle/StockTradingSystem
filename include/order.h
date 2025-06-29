@@ -3,6 +3,8 @@
 
 #include "trader.h"
 #include <ctime>
+#include <iostream>
+#include <format>
 
 namespace StockTradingSystem
 {
