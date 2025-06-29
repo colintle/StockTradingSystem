@@ -2,30 +2,29 @@
 #define STOCK_TRADING_ORDER_H
 
 #include "trader.h"
+#include "side.h"
 #include <ctime>
 #include <iostream>
 #include <format>
 
 namespace StockTradingSystem
 {
-    enum OrderType {BUY, SELL};
-
     class Order
     {
         public:
-            Order(Trader& trader, double price, int quantity, OrderType ordertype);
+            Order(Trader& trader, double price, int quantity, Side side);
             Trader getTrader() const;
             double getPrice() const;
             int getQuantity() const;
             std::time_t getTimestamp() const;
-            OrderType getOrdertype() const;
+            Side getSide() const;
             bool reduceQuantity(int quantity);
         private:
             Trader trader_;
             double price_;
             int quantity_;
             std::time_t timestamp_;
-            OrderType ordertype_;
+            Side side_;
     };
 }
 
