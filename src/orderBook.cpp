@@ -15,7 +15,7 @@ namespace StockTradingSystem
         std::vector<Order> sellOrders;
 
         for (const Order& order : book_){
-            if (order.getOrdertype() == OrderType::BUY){
+            if (order.getSide() == Side::BUY){
                 buyOrders.push_back(order);
             }
             else{
@@ -35,7 +35,7 @@ namespace StockTradingSystem
         std::cout << "ID\tPrice\tQuantity\tOrderType\n";
         for (const Order& order : book_)
         {
-            std::string orderTypeName = order.getOrdertype() == OrderType::BUY ? "Buy" : "Sell";
+            std::string orderTypeName = order.getSide() == Side::BUY ? "Buy" : "Sell";
             std::string output = std::format("{}\t{}\t{}\t{}\n", 
                 order.getTrader().getName(),
                 order.getPrice(),

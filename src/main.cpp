@@ -8,7 +8,7 @@ int main()
 {
     StockTradingSystem::Stock stock {145, "aapl"};
     StockTradingSystem::Trader trader{"Colin"};
-    StockTradingSystem::Order order {trader, 100.1, 2, StockTradingSystem::BUY};
+    StockTradingSystem::Order order {trader, 100.1, 2, StockTradingSystem::Side::BUY};
 
     std::string line = std::format(
         "Stock: {}  Trader: {}  Price: {:.2f}  Qty: {}\n",
