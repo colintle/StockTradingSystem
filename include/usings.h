@@ -11,7 +11,7 @@ namespace StockTradingSystem
     // +
     using Quantity = std::uint32_t;
     using OrderId = std::uint64_t;
-    using OrderId = std::vector<OrderId>;
+    using OrderIds = std::vector<OrderId>;
 }
 
 #endif
