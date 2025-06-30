@@ -2,10 +2,11 @@
 
 namespace StockTradingSystem
 {
-    Order::Order(Trader& trader, double price, int quantity, Side side):
+    Order::Order(Trader& trader, Price price, Quantity quantity, Side side, OrderType orderType):
     trader_{trader},
     price_{price},
     quantity_{quantity},
+    orderType_{orderType},
     timestamp_(std::time(nullptr)),
     side_{side}
     {}
@@ -15,14 +16,19 @@ namespace StockTradingSystem
         return trader_;
     }
 
-    double Order::getPrice() const
+    Price Order::getPrice() const
     {
         return price_;
     }
 
-    int Order::getQuantity() const
+    Quantity Order::getQuantity() const
     {
         return quantity_;
+    }
+
+    OrderType Order::getOrderType() const
+    {
+        return orderType_;
     }
 
     std::time_t Order::getTimestamp() const
@@ -33,15 +39,5 @@ namespace StockTradingSystem
     Side Order::getSide() const
     {
         return side_;
-    }
-
-    bool Order::reduceQuantity(int quantity)
-    {
-        if (quantity > 0 && quantity <= quantity_)
-        {
-            quantity_ -= quantity;
-            return true;
-        }
-        return false;
     }
 }
