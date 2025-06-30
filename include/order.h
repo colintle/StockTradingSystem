@@ -3,6 +3,8 @@
 
 #include "trader.h"
 #include "side.h"
+#include "usings.h"
+#include "orderType.h"
 #include <ctime>
 #include <iostream>
 #include <format>
@@ -12,17 +14,18 @@ namespace StockTradingSystem
     class Order
     {
         public:
-            Order(Trader& trader, double price, int quantity, Side side);
+            Order(Trader& trader, Price price, Quantity quantity, Side side, OrderType orderType);
             Trader getTrader() const;
-            double getPrice() const;
-            int getQuantity() const;
+            Price getPrice() const;
+            Quantity getQuantity() const;
+            OrderType getOrderType() const;
             std::time_t getTimestamp() const;
-            Side getSide() const;
-            bool reduceQuantity(int quantity);
+            Side getSide() const; 
         private:
             Trader trader_;
-            double price_;
-            int quantity_;
+            Price price_;
+            Quantity quantity_;
+            OrderType orderType_;
             std::time_t timestamp_;
             Side side_;
     };
