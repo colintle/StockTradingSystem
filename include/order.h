@@ -1,34 +1,39 @@
 #ifndef STOCK_TRADING_ORDER_H
 #define STOCK_TRADING_ORDER_H
 
-#include "trader.h"
 #include "side.h"
 #include "usings.h"
 #include "orderType.h"
-#include <ctime>
-#include <iostream>
+#include <stdexcept>
 #include <format>
+#include <memory>
+#include <list>
 
 namespace StockTradingSystem
 {
     class Order
     {
         public:
-            Order(Trader& trader, Price price, Quantity quantity, Side side, OrderType orderType);
-            Trader getTrader() const;
+            Order(Price price, Quantity quantity, Side side, OrderType orderType, OrderId orderId);
             Price getPrice() const;
-            Quantity getQuantity() const;
+            Side getSide() const;
             OrderType getOrderType() const;
-            std::time_t getTimestamp() const;
-            Side getSide() const; 
+            OrderId getOrderId() const;
+            Quantity getInitialQuantity() const;
+            Quantity getRemainingQuantity() const;
+            Quantity getFilledQuantity() const;
+            void Fill(Quantity quantity);
         private:
-            Trader trader_;
             Price price_;
-            Quantity quantity_;
-            OrderType orderType_;
-            std::time_t timestamp_;
             Side side_;
+            OrderType orderType_;
+            OrderId orderId_;
+            Quantity initialQuantity_;
+            Quantity remainingQuantity_;
     };
+
+    using OrderPointer = std::shared_ptr<Order>;
+    using OrderPointers = std::list<OrderPointer>;
 }
 
 #endif
