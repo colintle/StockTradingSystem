@@ -1,7 +1,6 @@
 #include <iostream>
 #include <format>
 #include "stock.h"
-#include "trader.h"
 #include "order.h"
 #include "orderType.h"
 
@@ -10,9 +9,9 @@ using namespace StockTradingSystem;
 
 int main()
 {
-    StockTradingSystem::Stock stock {145, "aapl"};
-    StockTradingSystem::Trader trader{"Colin"};
-    StockTradingSystem::Order order {trader, 100, 2, Side::BUY, OrderType::GoodTillCancel};
+    // StockTradingSystem::Stock stock {145, "aapl"};
+    // StockTradingSystem::Trader trader{"Colin"};
+    // StockTradingSystem::Order order {100, 2, Side::BUY, OrderType::GoodTillCancel};
 
     // std::string line = std::format(
     //     "Stock: {}  Trader: {}  Price: {:.2f}  Qty: {}\n",
