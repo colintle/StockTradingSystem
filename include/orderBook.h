@@ -4,6 +4,7 @@
 #include "order.h"
 #include "orderMatchStrategy.h"
 #include <vector>
+#include <iostream>
 
 namespace StockTradingSystem
 {

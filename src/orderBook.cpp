@@ -31,20 +31,6 @@ namespace StockTradingSystem
 
     void OrderBook::printOrderBook() const
     {
-        std::cout << "Order Book content...\n";
-        std::cout << "ID\tPrice\tQuantity\tOrderType\n";
-        for (const Order& order : book_)
-        {
-            std::string orderTypeName = order.getSide() == Side::BUY ? "Buy" : "Sell";
-            std::string output = std::format("{}\t{}\t{}\t{}\n", 
-                order.getTrader().getName(),
-                order.getPrice(),
-                order.getQuantity(),
-                orderTypeName);
-            std::cout << output;
-        }
-        std::cout << "\n";
-
     }
 
     void OrderBook::setStrategy(OrderMatchingStrategy* strategy)
