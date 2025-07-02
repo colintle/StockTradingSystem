@@ -46,6 +46,11 @@ namespace StockTradingSystem
         return getInitialQuantity() - getRemainingQuantity();
     }
 
+    bool Order::IsFilled() const
+    {
+        return getRemainingQuantity() == 0;
+    }
+
     void Order::Fill(Quantity quantity)
     {
         if (quantity > getRemainingQuantity())
