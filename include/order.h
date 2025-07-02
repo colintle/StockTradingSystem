@@ -22,6 +22,7 @@ namespace StockTradingSystem
             Quantity getInitialQuantity() const;
             Quantity getRemainingQuantity() const;
             Quantity getFilledQuantity() const;
+            bool IsFilled() const;
             void Fill(Quantity quantity);
         private:
             Price price_;
