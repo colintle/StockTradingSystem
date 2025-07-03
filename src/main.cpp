@@ -1,6 +1,5 @@
 #include <iostream>
 #include <format>
-#include "stock.h"
 #include "order.h"
 #include "orderType.h"
 
