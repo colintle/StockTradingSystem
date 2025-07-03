@@ -2,6 +2,7 @@
 #define STOCK_TRADING_ORDERBOOK_H
 
 #include "order.h"
+#include "orderModify.h"
 #include "trade.h"
 #include <map>
 #include <unordered_map>
@@ -10,6 +11,10 @@ namespace StockTradingSystem
 {
     class Orderbook
     {
+        public:
+            Trades addOrder(OrderPointer order);
+            void cancelOrder(OrderId orderId);
+            Trades modifyOrder(OrderModify order);
         private:
             struct OrderEntry
             {
