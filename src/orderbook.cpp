@@ -2,6 +2,76 @@
 
 namespace StockTradingSystem
 {
+    Trades Orderbook::addOrder(OrderPointer order)
+    {
+        if (orders_.contains(order->getOrderId()))
+        {
+            return {};
+        }
+
+        OrderPointers::iterator iterator;
+        if (order->getSide() == Side::BUY)
+        {   
+            OrderPointers& orders= bids_[order->getPrice()];
+            orders.push_back(order);
+            iterator = std::next(orders.begin(), orders.size() - 1);
+        }
+        else
+        {
+            OrderPointers& orders = asks_[order->getPrice()];
+            orders.push_back(order);
+            iterator = std::next(orders.begin(), orders.size() - 1);
+        }
+
+        orders_.insert({order->getOrderId(), OrderEntry{order, iterator}});
+        return matchOrders();
+
+    }
+
+    void Orderbook::cancelOrder(OrderId orderId)
+    {
+        if (!orders_.contains(orderId))
+        {
+            return;
+        }
+
+        const auto& [order, orderIterator] = orders_.at(orderId);
+        orders_.erase(orderId);
+
+        if (order->getSide() == Side::SELL)
+        {
+            Price price =  order->getPrice();
+            OrderPointers& orders = asks_.at(price);
+            orders.erase(orderIterator);
+            if (orders.empty())
+            {
+                asks_.erase(price);
+            }
+        }
+        else
+        {
+            Price price =  order->getPrice();
+            OrderPointers& orders = bids_.at(price);
+            orders.erase(orderIterator);
+            if (orders.empty())
+            {
+                bids_.erase(price);
+            }
+        }
+    }
+
+    Trades Orderbook::modifyOrder(OrderModify order)
+    {
+        if (!orders_.contains(order.getOrderId()))
+        {
+            return {};
+        }
+
+        const auto& [existingOrder, _] = orders_.at(order.getOrderId());
+        cancelOrder(order.getOrderId());
+        return addOrder(order.ToOrderPointer(existingOrder->getOrderType()));
+    }
+
     bool Orderbook::canMatch(Side side, Price price) const
     {
         if (side == Side::BUY)
