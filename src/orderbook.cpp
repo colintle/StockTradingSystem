@@ -153,4 +153,38 @@ namespace StockTradingSystem
 
         return trades;
     }
+
+    std::size_t Orderbook::size() const
+    {
+        return orders_.size();
+    }
+
+    OrderBookLevels Orderbook::getOrderInfos() const
+    {
+        Levels bids, asks;
+        bids.reserve(orders_.size());
+        asks.reserve(orders_.size());
+
+        auto createLevelInfos = [](Price price, const OrderPointers& orders)
+        {
+            return Level{price, std::accumulate(orders.begin(), orders.end(), (Quantity) 0,
+            [](Quantity runningSum, const OrderPointer& order)
+            {
+                return runningSum + order->getRemainingQuantity();
+            }
+            )};
+        };
+
+        for (const auto& [price, orders] : bids_)
+        {
+            bids.push_back(createLevelInfos(price, orders));
+        }
+
+        for (const auto& [price, orders] : asks_)
+        {
+            asks.push_back(createLevelInfos(price, orders));
+        }
+
+        return OrderBookLevels{bids, asks};
+    }
 }
