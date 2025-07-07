@@ -3,8 +3,11 @@
 
 #include "order.h"
 #include "orderModify.h"
+#include "orderbookLevels.h"
 #include "trade.h"
+
 #include <map>
+#include <numeric>
 #include <unordered_map>
 
 namespace StockTradingSystem
@@ -15,6 +18,8 @@ namespace StockTradingSystem
             Trades addOrder(OrderPointer order);
             void cancelOrder(OrderId orderId);
             Trades modifyOrder(OrderModify order);
+            std::size_t size() const;
+            OrderBookLevels getOrderInfos() const;
         private:
             struct OrderEntry
             {
