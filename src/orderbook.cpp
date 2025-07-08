@@ -151,6 +151,26 @@ namespace StockTradingSystem
             }
         }
 
+        if (!bids_.empty())
+        {
+            auto& [_, bids] = *bids_.begin();
+            auto& order = bids.front();
+            if (order->getOrderType() == OrderType::FillAndKill)
+            {
+                cancelOrder(order->getOrderId());
+            }
+        }
+
+        if (!asks_.empty())
+        {
+            auto& [_, asks] = *asks_.begin();
+            auto& order = asks.front();
+            if (order->getOrderType() == OrderType::FillAndKill)
+            {
+                cancelOrder(order->getOrderId());
+            }
+        }
+
         return trades;
     }
 
