@@ -15,6 +15,19 @@ namespace StockTradingSystem
     class Orderbook
     {
         public:
+
+            Orderbook();
+            // copy constuctor
+            Orderbook(const Orderbook&) = delete;
+            // copy assignment
+            void operator=(const Orderbook&) = delete;
+            // move constructor
+            Orderbook(Orderbook&&) = delete;
+            // move assignment
+            void operator=(Orderbook&&) = delete;
+            // deconstructor 
+            ~Orderbook();
+
             Trades addOrder(OrderPointer order);
             void cancelOrder(OrderId orderId);
             Trades modifyOrder(OrderModify order);
