@@ -207,4 +207,14 @@ namespace StockTradingSystem
 
         return OrderBookLevels{bids, asks};
     }
+
+    Orderbook::Orderbook()
+    {
+
+    }
+
+    Orderbook::~Orderbook()
+    {
+
+    }
 }
