@@ -6,7 +6,9 @@ namespace StockTradingSystem
     enum class OrderType
     {
         GoodTillCancel,
-        FillAndKill
+        FillAndKill,
+        FillOrKill,
+        GoodForDay
     };
 }
 
