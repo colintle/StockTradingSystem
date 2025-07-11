@@ -9,6 +9,24 @@ namespace StockTradingSystem
             return {};
         }
 
+        if (order->getOrderType() == OrderType::Market)
+        {
+            if (order->getSide() == Side::BUY && !asks_.empty())
+            {
+                const auto& [worstAsk, _] = *asks_.rbegin();
+                order->toGoodTillCancel(worstAsk);
+            }
+            else if (order->getSide() == Side::SELL && !bids_.empty())
+            {
+                const auto& [worstBuy, _] = *bids_.rbegin();
+                order->toGoodTillCancel(worstBuy);
+            }
+            else
+            {
+                return {};
+            }
+        }
+
         OrderPointers::iterator iterator;
         if (order->getSide() == Side::BUY)
         {   
@@ -122,16 +140,16 @@ namespace StockTradingSystem
                 auto& ask = asks.front();
 
                 Quantity quantity = std::min(bid->getRemainingQuantity(), ask->getRemainingQuantity());
-                bid->Fill(quantity);
-                ask->Fill(quantity);
+                bid->fill(quantity);
+                ask->fill(quantity);
 
-                if (bid->IsFilled())
+                if (bid->isFilled())
                 {
                     bids.pop_front();
                     orders_.erase(bid->getOrderId());
                 }
 
-                if (ask->IsFilled())
+                if (ask->isFilled())
                 {
                     asks.pop_front();
                     orders_.erase(ask->getOrderId());
