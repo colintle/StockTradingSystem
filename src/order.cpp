@@ -11,6 +11,10 @@ namespace StockTradingSystem
     remainingQuantity_{quantity}
     {}
 
+    Order::Order(Quantity quantity, Side side, OrderId orderId):
+    Order(Constants::InvalidPrice, quantity, side, OrderType::Market, orderId)
+    {}
+
     Price Order::getPrice() const
     {
         return price_;
@@ -46,12 +50,12 @@ namespace StockTradingSystem
         return getInitialQuantity() - getRemainingQuantity();
     }
 
-    bool Order::IsFilled() const
+    bool Order::isFilled() const
     {
         return getRemainingQuantity() == 0;
     }
 
-    void Order::Fill(Quantity quantity)
+    void Order::fill(Quantity quantity)
     {
         if (quantity > getRemainingQuantity())
         {
@@ -59,5 +63,16 @@ namespace StockTradingSystem
         }
 
         remainingQuantity_ -= quantity;
+    }
+
+    void Order::toGoodTillCancel(Price price) 
+    {
+        if (getOrderType() != OrderType::Market)
+        {
+            throw std::logic_error(std::format("Order ({}) cannot have its price adjusted, only market orders can.", getOrderId()));
+
+            price_ = price;
+            orderType_ = OrderType::GoodTillCancel;
+        }
     }
 }
