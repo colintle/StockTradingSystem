@@ -4,6 +4,7 @@
 #include "side.h"
 #include "usings.h"
 #include "orderType.h"
+#include "constants.h"
 #include <stdexcept>
 #include <format>
 #include <memory>
@@ -15,6 +16,7 @@ namespace StockTradingSystem
     {
         public:
             Order(Price price, Quantity quantity, Side side, OrderType orderType, OrderId orderId);
+            Order(Quantity quantity, Side side, OrderId orderId);
             Price getPrice() const;
             Side getSide() const;
             OrderType getOrderType() const;
@@ -22,8 +24,9 @@ namespace StockTradingSystem
             Quantity getInitialQuantity() const;
             Quantity getRemainingQuantity() const;
             Quantity getFilledQuantity() const;
-            bool IsFilled() const;
-            void Fill(Quantity quantity);
+            bool isFilled() const;
+            void fill(Quantity quantity);
+            void toGoodTillCancel(Price price);
         private:
             Price price_;
             Side side_;
