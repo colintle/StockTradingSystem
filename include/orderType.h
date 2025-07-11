@@ -7,8 +7,7 @@ namespace StockTradingSystem
     {
         GoodTillCancel,
         FillAndKill,
-        FillOrKill,
-        GoodForDay
+        Market
     };
 }
 
