@@ -2,6 +2,10 @@
 
 namespace StockTradingSystem
 {
+    Orderbook::Orderbook(): ordersPruneThread_{[this] {pruneGoodForDayOrders();}}{}
+
+    Orderbook::~Orderbook(){}
+
     Trades Orderbook::addOrder(OrderPointer order)
     {
         if (orders_.contains(order->getOrderId()))
@@ -46,7 +50,7 @@ namespace StockTradingSystem
 
     }
 
-    void Orderbook::cancelOrder(OrderId orderId)
+    void Orderbook::cancelOrderInternal(OrderId orderId)
     {
         if (!orders_.contains(orderId))
         {
@@ -226,12 +230,24 @@ namespace StockTradingSystem
         return OrderBookLevels{bids, asks};
     }
 
-    Orderbook::Orderbook()
+    void Orderbook::cancelOrder(OrderId orderId)
     {
+        std::scoped_lock ordersLock{ ordersMutex_ };
+        cancelOrderInternal(orderId);
+    }
+
+    void Orderbook::cancelOrders(OrderIds orderIds)
+    {
+        std::scoped_lock ordersLock{ ordersMutex_};
+
+        for (const auto& orderId : orderIds)
+        {
+            cancelOrderInternal(orderId);
+        }
 
     }
 
-    Orderbook::~Orderbook()
+    void Orderbook::pruneGoodForDayOrders()
     {
 
     }
