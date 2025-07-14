@@ -9,6 +9,9 @@
 #include <map>
 #include <numeric>
 #include <unordered_map>
+#include <mutex>
+#include <thread>
+#include <condition_variable>
 
 namespace StockTradingSystem
 {
@@ -46,6 +49,15 @@ namespace StockTradingSystem
             std::unordered_map<OrderId, OrderEntry> orders_;
             bool canMatch(Side side, Price price) const;
             Trades matchOrders();
+
+            void cancelOrderInternal(OrderId orderId);
+            void cancelOrders(OrderIds orderIds);
+
+            mutable std::mutex ordersMutex_;
+            std::thread ordersPruneThread_;
+            std::condition_variable shutdownConditionVariable_;
+            std::atomic<bool> shutdown_{false};
+            void pruneGoodForDayOrders();
     };
 }
 
