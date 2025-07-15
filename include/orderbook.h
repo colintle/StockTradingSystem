@@ -12,6 +12,8 @@
 #include <mutex>
 #include <thread>
 #include <condition_variable>
+#include <chrono>
+#include <ctime>
 
 namespace StockTradingSystem
 {
